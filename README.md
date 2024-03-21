@@ -1,8 +1,8 @@
-# JWT Auth Nestjs Template (In Development)
+# Learning Nestjs
 
 ## Description
 
-This is the practice project to learn Nestjs. My goal is to develop APIs which can authenticate and authorize users. 
+This is the practice project to learn Nestjs. 
 
 ## Tech Stack
 
