@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { Product } from './products.model';
 
@@ -12,8 +12,7 @@ export class ProductsController {
   }
 
   @Get(':id')
-  getProduct(@Param('id') id: number): any {
-    if (!id) return { Error: 'Invalid Id provided' };
+  getProduct(@Param('id') id: number): Product {
     return this.productsService.getProduct(id);
   }
 
@@ -32,5 +31,20 @@ export class ProductsController {
       prodPrice,
     );
     return { id: productId };
+  }
+
+  @Patch(':id')
+  updateProduct(
+    @Param('id') id: number,
+    @Body('title') prodTitle: string,
+    @Body('description') prodDescription: string,
+    @Body('price') prodPrice: number,
+  ): Product {
+    return this.productsService.updateProduct(
+      id,
+      prodTitle,
+      prodDescription,
+      prodPrice,
+    );
   }
 }
