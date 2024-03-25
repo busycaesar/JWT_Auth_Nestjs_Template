@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { Product } from './products.model';
 
@@ -17,18 +25,14 @@ export class ProductsController {
   }
 
   @Post()
-  createProduct(
-    @Body('title') prodTitle: string,
-    @Body('description') prodDescription: string,
-    @Body('price') prodPrice: number,
-  ): any {
+  createProduct(@Body() body): any {
     // Make sure all the required data is received!
-    if (!prodTitle || !prodDescription || !prodPrice)
+    if (!body.title || !body.description || !body.price)
       return { Error: 'Data not found!' };
     const productId = this.productsService.createProduct(
-      prodTitle,
-      prodDescription,
-      prodPrice,
+      body.title,
+      body.description,
+      body.price,
     );
     return { id: productId };
   }
@@ -46,5 +50,12 @@ export class ProductsController {
       prodDescription,
       prodPrice,
     );
+  }
+
+  @Delete(':id')
+  deleteProduct(@Param('id') id: string) {
+    if (this.productsService.deleteProduct(parseInt(id)))
+      return { Success: 'The product is deleted.' };
+    return { Error: 'Internal server error' };
   }
 }

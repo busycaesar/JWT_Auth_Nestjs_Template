@@ -39,4 +39,16 @@ export class ProductsService {
     product.price = price || product.price;
     return { ...product };
   }
+
+  deleteProduct(id: number) {
+    console.log(this.products);
+    this.products = this.products.filter((product) => {
+      console.log(typeof id);
+      console.log(typeof product.id);
+      return product.id !== id;
+    });
+    console.log(this.products);
+    if (!this.findProduct(id)) return true;
+    return false;
+  }
 }
